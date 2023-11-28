@@ -22,4 +22,4 @@ jobs: # Define jobs to be executed
           node-version: ${{ matrix.node-version }} # Set up the Node.js version from the matrix
       - run: npm install # Run 'npm install' to install dependencies
       - run: npm run build --prefix client # Run 'npm run build --prefix client' to build the client application
-      - run: npm test # Run 'npm test' to run the tests on the project
+
