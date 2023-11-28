@@ -8,12 +8,18 @@ on: # Trigger on
 
 jobs: # Define jobs to be executed
   build: # Job named 'build'
+    env: # Sets the environment in which the workflow operates
+      CI: true # Continuous integration environment, disables watch mode in tests
+    strategy:
+      matrix: # Define a matrix strategy for multiple versions
+        node-version: [18.x, 20.x] # Test with Node.js versions 18.x and 20.x
     runs-on: ubuntu-latest # Run on the latest version of Ubuntu
     steps: # Steps to be executed within this job
       - uses: actions/checkout@v3 # Checkout the repository code using the v3 version of the action
-      - name: Use Node.js version 20 # Define a step with a name
+      - name: Use Node.js version ${{ matrix.node-version }} # Define a step with a dynamic Node.js version from the matrix
         uses: actions/setup-node@v3 # Use the setup-node action with v3
         with:
-          node-version: "20" # Specify Node.js version 20 to be set up
+          node-version: ${{ matrix.node-version }} # Set up the Node.js version from the matrix
       - run: npm install # Run 'npm install' to install dependencies
       - run: npm run build --prefix client # Run 'npm run build --prefix client' to build the client application
+      - run: npm test # Run 'npm test' to run the tests on the project
