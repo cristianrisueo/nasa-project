@@ -1,0 +1,19 @@
+name: NASA Project CI # Name of the pipeline
+
+on: # Trigger on
+  push: # Trigger when pushing
+    branches: [master] # Only on the master branch
+  pull_request: # Trigger on pull requests
+    branches: [master] # Only on the master branch
+
+jobs: # Define jobs to be executed
+  build: # Job named 'build'
+    runs-on: ubuntu-latest # Run on the latest version of Ubuntu
+    steps: # Steps to be executed within this job
+      - uses: actions/checkout@v3 # Checkout the repository code using the v3 version of the action
+      - name: Use Node.js version 20 # Define a step with a name
+        uses: actions/setup-node@v3 # Use the setup-node action with v3
+        with:
+          node-version: "20" # Specify Node.js version 20 to be set up
+      - run: npm install # Run 'npm install' to install dependencies
+      - run: npm run build --prefix client # Run 'npm run build --prefix client' to build the client application
